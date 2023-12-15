@@ -30,32 +30,28 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public ProfileEntity findByEmail(String email) {
+    public Optional<ProfileEntity> findByEmail(String email) {
         return profileRepository.findByEmail(email);
     }
 
     @Override
     public ProfileEntity saveProfile(ProfileEntity profileEntity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveProfile'");
+        return profileRepository.save(profileEntity);
     }
 
     @Override
     public ProfileEntity updateProfile(ProfileEntity profileEntity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateProfile'");
+        return profileRepository.save(profileEntity);
     }
 
     @Override
-    public boolean deleteProfileById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteProfileById'");
+    public void deleteProfileById(Long id) {
+        profileRepository.deleteById(id);
     }
 
     @Override
-    public boolean deleteProfileByEmail(String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteProfileByEmail'");
+    public void deleteProfileByEmail(String email) {
+        profileRepository.deleteByEmail(email);
     }
     
 }

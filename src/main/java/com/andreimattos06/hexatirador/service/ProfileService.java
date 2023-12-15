@@ -10,14 +10,14 @@ public interface ProfileService {
 
     Optional<ProfileEntity> findById(Long id);
 
-    ProfileEntity findByEmail(String email);
+    Optional<ProfileEntity> findByEmail(String email);
 
     ProfileEntity saveProfile(ProfileEntity profileEntity);
 
     ProfileEntity updateProfile(ProfileEntity profileEntity);
 
-    boolean deleteProfileById(Long id);
+    void deleteProfileById(Long id);
 
-    boolean deleteProfileByEmail(String email);
+    void deleteProfileByEmail(String email);
 
 }
