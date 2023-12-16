@@ -1,5 +1,9 @@
 package com.andreimattos06.hexatirador.entity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,26 +29,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "profile", uniqueConstraints = { @UniqueConstraint(columnNames = { "email" }) })
-public class ProfileEntity {
+public class ProfileEntity implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "first_name")
     private String first_name;
 
-    @Column(name = "last_name")
     private String last_name;
 
-    @Column(name = "email", unique = true)
+    @Column(unique = true)
     private String email;
 
-    @Column(name = "password")
     private String password;
 
-    @Column(name = "gender")
     private String gender;
+
+    private List<HabitualityEntity> habitualities = new ArrayList<>();
 
 }

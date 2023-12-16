@@ -3,21 +3,45 @@ package com.andreimattos06.hexatirador.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.andreimattos06.hexatirador.entity.ProfileEntity;
+import com.andreimattos06.hexatirador.repository.ProfileRepository;
 
-public interface ProfileService {
-    List<ProfileEntity> findAllProfiles();
+@Service
+public class ProfileService {
 
-    Optional<ProfileEntity> findById(Long id);
+    @Autowired
+    private ProfileRepository profileRepository;
 
-    Optional<ProfileEntity> findByEmail(String email);
+    public List<ProfileEntity> findAllProfiles() {
+        return profileRepository.findAll();
 
-    ProfileEntity saveProfile(ProfileEntity profileEntity);
+    }
 
-    ProfileEntity updateProfile(ProfileEntity profileEntity);
+    public Optional<ProfileEntity> findById(Long id) {
+        return profileRepository.findById(id);
+    }
 
-    void deleteProfileById(Long id);
+    public Optional<ProfileEntity> findByEmail(String email) {
+        return profileRepository.findByEmail(email);
+    }
 
-    void deleteProfileByEmail(String email);
+    public ProfileEntity saveProfile(ProfileEntity profileEntity) {
+        return profileRepository.save(profileEntity);
+    }
+
+    public ProfileEntity updateProfile(ProfileEntity profileEntity) {
+        return profileRepository.save(profileEntity);
+    }
+
+    public void deleteProfileById(Long id) {
+        profileRepository.deleteById(id);
+    }
+
+    public void deleteProfileByEmail(String email) {
+        profileRepository.deleteByEmail(email);
+    }
 
 }

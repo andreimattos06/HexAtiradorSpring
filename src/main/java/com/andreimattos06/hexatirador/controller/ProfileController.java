@@ -3,6 +3,7 @@ package com.andreimattos06.hexatirador.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,14 +17,13 @@ import com.andreimattos06.hexatirador.entity.ProfileEntity;
 import com.andreimattos06.hexatirador.service.ProfileService;
 
 @RestController
-@RequestMapping("/profile")
+@RequestMapping("/profiles")
 public class ProfileController {
     
-    private final ProfileService profileService;
+    @Autowired
+    private ProfileService profileService;
 
-    public ProfileController(ProfileService profileService) {
-        this.profileService = profileService;
-    }
+
 
     @GetMapping
     public List<ProfileEntity> findAllProfiles(){
