@@ -1,11 +1,6 @@
 package com.andreimattos06.hexatirador.entity;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,24 +21,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "habituality")
-public class HabitualityEntity implements Serializable {
-
+@Table(name = "usedgun")
+public class UsedGunEntity implements Serializable{
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Instant date;
-    private String club_name;
-    private String city;
-    private String state;
+    private String gun;
+    private String brand;
+    private String calibre;
+    private Integer amount;   
+    private String serial_number;
 
     @ManyToOne
-    @JoinColumn(name = "profile_id")
-    private ProfileEntity profile;
-
-    @OneToMany(mappedBy = "habituality")
-    @JsonIgnore
-    private List<UsedGunEntity> used_guns = new ArrayList<>();
+    @JoinColumn(name = "habituality_id")
+    private HabitualityEntity habituality;
+  
 
 }
