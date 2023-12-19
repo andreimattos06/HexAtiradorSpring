@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.andreimattos06.hexatirador.entity.HabitualityEntity;
 import com.andreimattos06.hexatirador.repository.HabitualityRepository;
+import com.andreimattos06.hexatirador.service.exceptions.DatabaseException;
+import com.andreimattos06.hexatirador.service.exceptions.ResourceNotFoundException;
 
 @Service
 public class HabitualityService {
@@ -20,8 +23,9 @@ public class HabitualityService {
 
     }
 
-    public Optional<HabitualityEntity> findById(Long id) {
-        return habitualityRepository.findById(id);
+    public HabitualityEntity findById(Long id) {
+        Optional<HabitualityEntity> obj = habitualityRepository.findById(id);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     /*public Optional<HabitualityEntity> findByEmail(String email) {
@@ -46,7 +50,15 @@ public class HabitualityService {
     }
 
     public void deleteHabitualityById(Long id) {
-        habitualityRepository.deleteById(id);
+        try{
+            habitualityRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DatabaseException(e.getMessage());            
+        }catch (RuntimeException e){
+            throw new ResourceNotFoundException(id);
+        }
+        
+        
     }
 
     /*

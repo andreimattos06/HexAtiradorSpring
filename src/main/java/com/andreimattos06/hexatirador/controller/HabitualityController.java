@@ -1,7 +1,6 @@
 package com.andreimattos06.hexatirador.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +31,7 @@ public class HabitualityController {
     }
 
     @GetMapping("/{id}")
-    public Optional<HabitualityEntity> findById(@PathVariable("id") Long id){
+    public HabitualityEntity findById(@PathVariable("id") Long id){
         return habitualityService.findById(id);
     }
 

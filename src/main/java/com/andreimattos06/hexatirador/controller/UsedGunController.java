@@ -1,7 +1,6 @@
 package com.andreimattos06.hexatirador.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +31,7 @@ public class UsedGunController {
     }
 
     @GetMapping("/{id}")
-    public Optional<UsedGunEntity> findById(@PathVariable("id") Long id){
+    public UsedGunEntity findById(@PathVariable("id") Long id){
         return usedGunService.findById(id);
     }
 
@@ -48,9 +47,9 @@ public class UsedGunController {
         return usedGunService.saveUsedGun(usedGunEntity);
     }
 
-    @PutMapping
-    public UsedGunEntity updateUsedGun(@RequestBody UsedGunEntity usedGunEntity){
-        return usedGunService.updateUsedGun(usedGunEntity);
+    @PutMapping("/{id}")
+    public UsedGunEntity updateUsedGun(@PathVariable("id") Long id, @RequestBody UsedGunEntity usedGunEntity){
+        return usedGunService.updateUsedGun(usedGunEntity, id);
     }
 
     @DeleteMapping("/{id}")

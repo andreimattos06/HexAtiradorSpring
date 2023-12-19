@@ -1,39 +1,19 @@
 package com.andreimattos06.hexatirador;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.andreimattos06.hexatirador.entity.HabitualityEntity;
-import com.andreimattos06.hexatirador.entity.ProfileEntity;
-import com.andreimattos06.hexatirador.entity.UsedGunEntity;
-import com.andreimattos06.hexatirador.service.HabitualityService;
-import com.andreimattos06.hexatirador.service.ProfileService;
-import com.andreimattos06.hexatirador.service.UsedGunService;
+
 
 @RestController
 public class HelloWorldController {
 
-    @Autowired
-    private HabitualityService habitualityService;
-
-    @Autowired
-    private ProfileService profileService;
-
-    @Autowired
-    private UsedGunService usedGunService;
 
     @GetMapping(path = "/hello")
     public String helloWorld() {
 
-        Optional<ProfileEntity> p1 = profileService.findById(1L);
 
-
+/*
         HabitualityEntity h1 = HabitualityEntity.builder()
                 .id(null)
                 .date(Instant.now())
@@ -73,7 +53,7 @@ public class HelloWorldController {
         usedGunService.saveUsedGun(ug1);
 
 
-
+*/
         return "abcdefg";
     }
 }

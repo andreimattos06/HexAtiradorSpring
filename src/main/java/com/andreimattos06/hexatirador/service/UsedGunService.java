@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.andreimattos06.hexatirador.entity.UsedGunEntity;
 import com.andreimattos06.hexatirador.repository.UsedGunRepository;
+import com.andreimattos06.hexatirador.service.exceptions.ResourceNotFoundException;
 
 @Service
 public class UsedGunService {
@@ -20,8 +21,9 @@ public class UsedGunService {
 
     }
 
-    public Optional<UsedGunEntity> findById(Long id) {
-        return usedGunRepository.findById(id);
+    public UsedGunEntity findById(Long id) {
+        Optional<UsedGunEntity> obj = usedGunRepository.findById(id);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     /*public Optional<UsedGunEntity> findByEmail(String email) {

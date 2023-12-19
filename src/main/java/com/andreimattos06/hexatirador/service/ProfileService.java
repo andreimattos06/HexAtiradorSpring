@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.andreimattos06.hexatirador.entity.ProfileEntity;
 import com.andreimattos06.hexatirador.repository.ProfileRepository;
+import com.andreimattos06.hexatirador.service.exceptions.ResourceNotFoundException;
 
 @Service
 public class ProfileService {
@@ -20,8 +21,9 @@ public class ProfileService {
 
     }
 
-    public Optional<ProfileEntity> findById(Long id) {
-        return profileRepository.findById(id);
+    public ProfileEntity findById(Long id) {
+        Optional<ProfileEntity> obj = profileRepository.findById(id);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public Optional<ProfileEntity> findByEmail(String email) {
