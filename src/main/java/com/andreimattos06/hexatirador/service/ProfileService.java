@@ -32,8 +32,18 @@ public class ProfileService {
         return profileRepository.save(profileEntity);
     }
 
-    public ProfileEntity updateProfile(ProfileEntity profileEntity) {
-        return profileRepository.save(profileEntity);
+    public ProfileEntity updateProfile(ProfileEntity profileEntity, Long id) {
+        ProfileEntity profile = profileRepository.getReferenceById(id);
+        updateData(profileEntity, profile);
+        return profileRepository.save(profile);
+    }
+
+    private void updateData(ProfileEntity profileEntity, ProfileEntity profile) {
+        profile.setEmail(profileEntity.getEmail());
+        profile.setFirst_name(profileEntity.getFirst_name());
+        profile.setGender(profileEntity.getGender());
+        profile.setLast_name(profileEntity.getLast_name());
+        profile.setPassword(profileEntity.getPassword());
     }
 
     public void deleteProfileById(Long id) {

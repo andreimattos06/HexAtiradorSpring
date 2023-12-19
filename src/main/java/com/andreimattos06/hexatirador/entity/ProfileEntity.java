@@ -17,8 +17,8 @@ import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * CadastroEntity
@@ -28,7 +28,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode
 @Table(name = "profile", uniqueConstraints = { @UniqueConstraint(columnNames = { "email" }) })
 public class ProfileEntity implements Serializable{
 
@@ -49,6 +48,9 @@ public class ProfileEntity implements Serializable{
 
     @OneToMany(mappedBy = "profile")
     @JsonIgnore
+    @Builder.Default
+    @ToString.Exclude
     private List<HabitualityEntity> habitualities = new ArrayList<>();
+
 
 }

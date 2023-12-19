@@ -18,10 +18,9 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@EqualsAndHashCode
 @Data
 @Builder
 @NoArgsConstructor
@@ -45,6 +44,8 @@ public class HabitualityEntity implements Serializable {
 
     @OneToMany(mappedBy = "habituality")
     @JsonIgnore
+    @Builder.Default
+    @ToString.Exclude
     private List<UsedGunEntity> used_guns = new ArrayList<>();
 
 }

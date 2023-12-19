@@ -32,8 +32,17 @@ public class HabitualityService {
         return habitualityRepository.save(habitualityEntity);
     }
 
-    public HabitualityEntity updateHabituality(HabitualityEntity habitualityEntity) {
-        return habitualityRepository.save(habitualityEntity);
+    public HabitualityEntity updateHabituality(HabitualityEntity habitualityEntity, Long id) {
+        HabitualityEntity entity = habitualityRepository.getReferenceById(id);
+        updateData(habitualityEntity, entity);
+        return habitualityRepository.save(entity);
+    }
+
+    private void updateData(HabitualityEntity habitualityEntity, HabitualityEntity habituality) {
+        habituality.setCity(habitualityEntity.getCity());
+        habituality.setClub_name(habitualityEntity.getClub_name());
+        habituality.setDate(habitualityEntity.getDate());
+        habituality.setState(habitualityEntity.getState());
     }
 
     public void deleteHabitualityById(Long id) {

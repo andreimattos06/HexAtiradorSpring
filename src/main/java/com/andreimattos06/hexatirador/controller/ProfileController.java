@@ -48,9 +48,9 @@ public class ProfileController {
         return profileService.saveProfile(profileEntity);
     }
 
-    @PutMapping
-    public ProfileEntity updateProfile(@RequestBody ProfileEntity profileEntity){
-        return profileService.updateProfile(profileEntity);
+    @PutMapping("/{id}")
+    public ProfileEntity updateProfile(@PathVariable("id") Long id, @RequestBody ProfileEntity profileEntity){
+        return profileService.updateProfile(profileEntity, id);
     }
 
     @DeleteMapping("/{id}")

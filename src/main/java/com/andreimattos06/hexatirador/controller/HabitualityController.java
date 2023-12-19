@@ -45,12 +45,13 @@ public class HabitualityController {
 
     @PostMapping
     public HabitualityEntity saveHabituality(@RequestBody HabitualityEntity habitualityEntity){
+        System.err.println(habitualityEntity);
         return habitualityService.saveHabituality(habitualityEntity);
     }
 
-    @PutMapping
-    public HabitualityEntity updateHabituality(@RequestBody HabitualityEntity habitualityEntity){
-        return habitualityService.updateHabituality(habitualityEntity);
+    @PutMapping(value = "/{id}")
+    public HabitualityEntity updateHabituality(@PathVariable("id") Long id, @RequestBody HabitualityEntity habitualityEntity){
+        return habitualityService.updateHabituality(habitualityEntity, id);
     }
 
     @DeleteMapping("/{id}")
