@@ -21,7 +21,7 @@ public class UsedGunService {
 
     }
 
-    public UsedGunEntity findById(Long id) {
+    public UsedGunEntity findById(String id) {
         Optional<UsedGunEntity> obj = usedGunRepository.findById(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
@@ -34,22 +34,22 @@ public class UsedGunService {
         return usedGunRepository.save(usedGunEntity);
     }
 
-    public UsedGunEntity updateUsedGun(UsedGunEntity usedGunEntity, Long id) {
-        UsedGunEntity usedgun = usedGunRepository.getReferenceById(id);
-        updateData(usedGunEntity, usedgun);
-        return usedGunRepository.save(usedgun);
+    public UsedGunEntity updateUsedGun(UsedGunEntity usedGunEntity, String id) {
+        /*UsedGunEntity usedgun = usedGunRepository.getReferenceById(id);
+        updateData(usedGunEntity, usedgun);*/
+        return usedGunRepository.save(usedGunEntity);
     }
 
-    private void updateData(UsedGunEntity usedGunEntity, UsedGunEntity usedgun) {
+    /*private void updateData(UsedGunEntity usedGunEntity, UsedGunEntity usedgun) {
         usedgun.setAmount(usedGunEntity.getAmount());
         usedgun.setBrand(usedGunEntity.getBrand());
         usedgun.setCalibre(usedGunEntity.getCalibre());
         usedgun.setGun(usedGunEntity.getGun());
         usedgun.setSerial_number(usedGunEntity.getSerial_number());
         
-    }
+    }*/
 
-    public void deleteUsedGunById(Long id) {
+    public void deleteUsedGunById(String id) {
         usedGunRepository.deleteById(id);
     }
 

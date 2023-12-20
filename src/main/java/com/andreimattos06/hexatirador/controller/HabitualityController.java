@@ -31,7 +31,7 @@ public class HabitualityController {
     }
 
     @GetMapping("/{id}")
-    public HabitualityEntity findById(@PathVariable("id") Long id){
+    public HabitualityEntity findById(@PathVariable("id") String id){
         return habitualityService.findById(id);
     }
 
@@ -49,12 +49,12 @@ public class HabitualityController {
     }
 
     @PutMapping(value = "/{id}")
-    public HabitualityEntity updateHabituality(@PathVariable("id") Long id, @RequestBody HabitualityEntity habitualityEntity){
+    public HabitualityEntity updateHabituality(@PathVariable("id") String id, @RequestBody HabitualityEntity habitualityEntity){
         return habitualityService.updateHabituality(habitualityEntity, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id){
+    public void deleteById(@PathVariable("id") String id){
         habitualityService.deleteHabitualityById(id);
     }
 

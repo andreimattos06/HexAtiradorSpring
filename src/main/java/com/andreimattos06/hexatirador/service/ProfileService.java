@@ -21,7 +21,7 @@ public class ProfileService {
 
     }
 
-    public ProfileEntity findById(Long id) {
+    public ProfileEntity findById(String id) {
         Optional<ProfileEntity> obj = profileRepository.findById(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
@@ -34,21 +34,21 @@ public class ProfileService {
         return profileRepository.save(profileEntity);
     }
 
-    public ProfileEntity updateProfile(ProfileEntity profileEntity, Long id) {
-        ProfileEntity profile = profileRepository.getReferenceById(id);
-        updateData(profileEntity, profile);
-        return profileRepository.save(profile);
+    public ProfileEntity updateProfile(ProfileEntity profileEntity, String id) {
+        /*ProfileEntity profile = profileRepository.getReferenceById(id);
+        updateData(profileEntity, profile);*/
+        return profileRepository.save(profileEntity);
     }
 
-    private void updateData(ProfileEntity profileEntity, ProfileEntity profile) {
+    /*private void updateData(ProfileEntity profileEntity, ProfileEntity profile) {
         profile.setEmail(profileEntity.getEmail());
         profile.setFirst_name(profileEntity.getFirst_name());
         profile.setGender(profileEntity.getGender());
         profile.setLast_name(profileEntity.getLast_name());
         profile.setPassword(profileEntity.getPassword());
-    }
+    }*/
 
-    public void deleteProfileById(Long id) {
+    public void deleteProfileById(String id) {
         profileRepository.deleteById(id);
     }
 

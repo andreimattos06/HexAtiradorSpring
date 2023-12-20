@@ -31,7 +31,7 @@ public class UsedGunController {
     }
 
     @GetMapping("/{id}")
-    public UsedGunEntity findById(@PathVariable("id") Long id){
+    public UsedGunEntity findById(@PathVariable("id") String id){
         return usedGunService.findById(id);
     }
 
@@ -48,12 +48,12 @@ public class UsedGunController {
     }
 
     @PutMapping("/{id}")
-    public UsedGunEntity updateUsedGun(@PathVariable("id") Long id, @RequestBody UsedGunEntity usedGunEntity){
+    public UsedGunEntity updateUsedGun(@PathVariable("id") String id, @RequestBody UsedGunEntity usedGunEntity){
         return usedGunService.updateUsedGun(usedGunEntity, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id){
+    public void deleteById(@PathVariable("id") String id){
         usedGunService.deleteUsedGunById(id);
     }
 

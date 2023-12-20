@@ -31,7 +31,7 @@ public class ProfileController {
     }
 
     @GetMapping("/{id}")
-    public ProfileEntity findById(@PathVariable("id") Long id){
+    public ProfileEntity findById(@PathVariable("id") String id){
         return profileService.findById(id);
     }
 
@@ -48,12 +48,12 @@ public class ProfileController {
     }
 
     @PutMapping("/{id}")
-    public ProfileEntity updateProfile(@PathVariable("id") Long id, @RequestBody ProfileEntity profileEntity){
+    public ProfileEntity updateProfile(@PathVariable("id") String id, @RequestBody ProfileEntity profileEntity){
         return profileService.updateProfile(profileEntity, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id){
+    public void deleteById(@PathVariable("id") String id){
         profileService.deleteProfileById(id);
     }
 

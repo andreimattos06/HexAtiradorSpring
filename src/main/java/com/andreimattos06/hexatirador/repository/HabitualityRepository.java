@@ -1,7 +1,7 @@
 package com.andreimattos06.hexatirador.repository;
 
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import com.andreimattos06.hexatirador.entity.HabitualityEntity;
@@ -10,6 +10,6 @@ import com.andreimattos06.hexatirador.entity.HabitualityEntity;
  * ProfileRepository
  */
 @Repository
-public interface HabitualityRepository extends JpaRepository<HabitualityEntity, Long>{
+public interface HabitualityRepository extends MongoRepository<HabitualityEntity, String>{
 
 }

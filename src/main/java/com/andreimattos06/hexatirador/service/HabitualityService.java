@@ -23,7 +23,7 @@ public class HabitualityService {
 
     }
 
-    public HabitualityEntity findById(Long id) {
+    public HabitualityEntity findById(String id) {
         Optional<HabitualityEntity> obj = habitualityRepository.findById(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
@@ -36,20 +36,20 @@ public class HabitualityService {
         return habitualityRepository.save(habitualityEntity);
     }
 
-    public HabitualityEntity updateHabituality(HabitualityEntity habitualityEntity, Long id) {
-        HabitualityEntity entity = habitualityRepository.getReferenceById(id);
-        updateData(habitualityEntity, entity);
-        return habitualityRepository.save(entity);
+    public HabitualityEntity updateHabituality(HabitualityEntity habitualityEntity, String id) {
+        /*HabitualityEntity entity = habitualityRepository.getReferenceById(id);
+        updateData(habitualityEntity, entity);*/
+        return habitualityRepository.save(habitualityEntity);
     }
 
-    private void updateData(HabitualityEntity habitualityEntity, HabitualityEntity habituality) {
+    /*private void updateData(HabitualityEntity habitualityEntity, HabitualityEntity habituality) {
         habituality.setCity(habitualityEntity.getCity());
         habituality.setClub_name(habitualityEntity.getClub_name());
         habituality.setDate(habitualityEntity.getDate());
         habituality.setState(habitualityEntity.getState());
-    }
+    }*/
 
-    public void deleteHabitualityById(Long id) {
+    public void deleteHabitualityById(String id) {
         try{
             habitualityRepository.deleteById(id);
         }catch (DataIntegrityViolationException e){
