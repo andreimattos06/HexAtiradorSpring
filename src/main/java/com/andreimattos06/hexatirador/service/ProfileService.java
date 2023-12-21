@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.andreimattos06.hexatirador.dto.ProfileDTO;
 import com.andreimattos06.hexatirador.entity.ProfileEntity;
 import com.andreimattos06.hexatirador.repository.ProfileRepository;
 import com.andreimattos06.hexatirador.service.exceptions.ResourceNotFoundException;
@@ -54,6 +55,11 @@ public class ProfileService {
 
     public void deleteProfileByEmail(String email) {
         profileRepository.deleteByEmail(email);
+    }
+
+    public ProfileEntity fromDTO(ProfileDTO profile){
+        return new ProfileEntity().builder().email(profile.getEmail()).first_name(profile.getFirst_name()).gender(profile.getGender())
+        .last_name(profile.getLast_name()).password(profile.getPassword()).build();
     }
 
 }
