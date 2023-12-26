@@ -2,6 +2,7 @@ package com.andreimattos06.hexatirador.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,15 +30,16 @@ public class UsedGunController {
 
 
     @GetMapping
-    public ResponseEntity<List<UsedGunEntity>> findAllUsedGuns(){
+    public ResponseEntity<List<UsedGunDTO>> findAllUsedGuns(){
         List<UsedGunEntity> used_guns = usedGunService.findAllUsedGuns();
-        return ResponseEntity.ok().body(used_guns);
+        List<UsedGunDTO> used_guns_dto = used_guns.stream().map(e -> new UsedGunDTO(e)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(used_guns_dto);
         
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsedGunEntity> findById(@PathVariable("id") String id){
-        UsedGunEntity used_gun = usedGunService.findById(id);
+    public ResponseEntity<UsedGunDTO> findById(@PathVariable("id") String id){
+        UsedGunDTO used_gun = new UsedGunDTO(usedGunService.findById(id));
         return ResponseEntity.ok().body(used_gun);
     }
 
@@ -58,8 +60,8 @@ public class UsedGunController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsedGunEntity> updateUsedGun(@PathVariable("id") String id, @RequestBody UsedGunEntity usedGunEntity){
-        UsedGunEntity used_gun = usedGunService.updateUsedGun(usedGunEntity, id);
+    public ResponseEntity<UsedGunDTO> updateUsedGun(@PathVariable("id") String id, @RequestBody UsedGunEntity usedGunEntity){
+        UsedGunDTO used_gun = new UsedGunDTO(usedGunService.updateUsedGun(usedGunEntity, id));
         return ResponseEntity.ok().body(used_gun);
     }
 

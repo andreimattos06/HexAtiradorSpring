@@ -2,6 +2,7 @@ package com.andreimattos06.hexatirador.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,14 +30,15 @@ public class HabitualityController {
 
 
     @GetMapping
-    public ResponseEntity<List<HabitualityEntity>> findAllHabitualitys(){
-        List<HabitualityEntity> habitualities = habitualityService.findAllHabitualitys();        
-        return ResponseEntity.ok().body(habitualities);
+    public ResponseEntity<List<HabitualityDTO>> findAllHabitualitys(){
+        List<HabitualityEntity> habitualities = habitualityService.findAllHabitualitys();      
+        List<HabitualityDTO> habitualities_dto = habitualities.stream().map(e -> new HabitualityDTO(e)).collect(Collectors.toList());  
+        return ResponseEntity.ok().body(habitualities_dto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HabitualityEntity> findById(@PathVariable("id") String id){
-        HabitualityEntity habituality = habitualityService.findById(id);
+    public ResponseEntity<HabitualityDTO> findById(@PathVariable("id") String id){
+        HabitualityDTO habituality = new HabitualityDTO(habitualityService.findById(id));
         return ResponseEntity.ok().body(habituality);
     }
 
@@ -56,8 +58,8 @@ public class HabitualityController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<HabitualityEntity> updateHabituality(@PathVariable("id") String id, @RequestBody HabitualityEntity habitualityEntity){
-        HabitualityEntity habituality = habitualityService.updateHabituality(habitualityEntity, id);
+    public ResponseEntity<HabitualityDTO> updateHabituality(@PathVariable("id") String id, @RequestBody HabitualityEntity habitualityEntity){
+        HabitualityDTO habituality = new HabitualityDTO(habitualityService.updateHabituality(habitualityEntity, id));
         return ResponseEntity.ok().body(habituality);
     }
 
