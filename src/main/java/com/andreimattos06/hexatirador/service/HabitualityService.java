@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.andreimattos06.hexatirador.dto.HabitualityDTO;
 import com.andreimattos06.hexatirador.entity.HabitualityEntity;
 import com.andreimattos06.hexatirador.repository.HabitualityRepository;
-import com.andreimattos06.hexatirador.service.exceptions.DatabaseException;
 import com.andreimattos06.hexatirador.service.exceptions.ResourceNotFoundException;
 
 @Service
@@ -49,16 +48,19 @@ public class HabitualityService {
         habituality.setState(habitualityEntity.getState());
     }*/
 
-    public void deleteHabitualityById(String id) {
-        try{
-            habitualityRepository.deleteById(id);
-        }catch (DataIntegrityViolationException e){
-            throw new DatabaseException(e.getMessage());            
-        }catch (RuntimeException e){
-            throw new ResourceNotFoundException(id);
-        }
+    public void deleteHabitualityById(String id) {        
+            habitualityRepository.deleteById(id);      
         
-        
+    }
+
+    public HabitualityEntity fromDTO(HabitualityDTO habitiality){
+        return HabitualityEntity.builder()
+        .city(habitiality.getCity())
+        .club_name(habitiality.getClub_name())
+        .date(habitiality.getDate())
+        .state(habitiality.getState())
+        .profile(habitiality.getProfile())
+        .build();
     }
 
     /*

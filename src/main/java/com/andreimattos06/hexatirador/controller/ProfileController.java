@@ -42,12 +42,12 @@ public class ProfileController {
         return new ProfileDTO(profileService.findById(id));
     }
 
-    /*
-    @GetMapping("/{email}")
-    public Optional<ProfileEntity> findByEmail(@PathVariable("email") String email){
-        return profileService.findByEmail(email);
+    
+    @GetMapping("/email/{email}")
+    public ProfileDTO findByEmail(@PathVariable("email") String email){        
+        return new ProfileDTO(profileService.findByEmail(email));
     }
-    */
+    
 
     @PostMapping
     public ResponseEntity<Void> saveProfile(@RequestBody ProfileDTO profileDTO){

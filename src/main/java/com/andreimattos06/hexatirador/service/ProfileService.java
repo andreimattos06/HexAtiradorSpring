@@ -27,8 +27,9 @@ public class ProfileService {
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public Optional<ProfileEntity> findByEmail(String email) {
-        return profileRepository.findByEmail(email);
+    public ProfileEntity findByEmail(String email) {
+        Optional<ProfileEntity> obj = profileRepository.findByEmail(email);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(email));
     }
 
     public ProfileEntity saveProfile(ProfileEntity profileEntity) {
@@ -58,8 +59,8 @@ public class ProfileService {
     }
 
     public ProfileEntity fromDTO(ProfileDTO profile){
-        return new ProfileEntity().builder().email(profile.getEmail()).first_name(profile.getFirst_name()).gender(profile.getGender())
-        .last_name(profile.getLast_name()).password(profile.getPassword()).build();
+        return ProfileEntity.builder().email(profile.getEmail()).first_name(profile.getFirst_name()).gender(profile.getGender())
+        .last_name(profile.getLast_name()).build();
     }
 
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.andreimattos06.hexatirador.dto.UsedGunDTO;
 import com.andreimattos06.hexatirador.entity.UsedGunEntity;
 import com.andreimattos06.hexatirador.repository.UsedGunRepository;
 import com.andreimattos06.hexatirador.service.exceptions.ResourceNotFoundException;
@@ -51,6 +52,16 @@ public class UsedGunService {
 
     public void deleteUsedGunById(String id) {
         usedGunRepository.deleteById(id);
+    }
+
+    public UsedGunEntity fromDTO(UsedGunDTO usedGunDTO){
+        return UsedGunEntity.builder()
+        .amount(usedGunDTO.getAmount())
+        .brand(usedGunDTO.getBrand())
+        .calibre(usedGunDTO.getCalibre())
+        .gun(usedGunDTO.getGun())
+        .habituality(usedGunDTO.getHabituality())
+        .build();
     }
 
     /*
