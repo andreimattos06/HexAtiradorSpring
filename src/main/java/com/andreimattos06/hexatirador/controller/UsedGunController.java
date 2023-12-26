@@ -20,7 +20,7 @@ import com.andreimattos06.hexatirador.entity.UsedGunEntity;
 import com.andreimattos06.hexatirador.service.UsedGunService;
 
 @RestController
-@RequestMapping("/usedgun")
+@RequestMapping("/usedguns")
 public class UsedGunController {
         
     @Autowired
@@ -29,14 +29,16 @@ public class UsedGunController {
 
 
     @GetMapping
-    public List<UsedGunEntity> findAllUsedGuns(){
-        return usedGunService.findAllUsedGuns();
+    public ResponseEntity<List<UsedGunEntity>> findAllUsedGuns(){
+        List<UsedGunEntity> used_guns = usedGunService.findAllUsedGuns();
+        return ResponseEntity.ok().body(used_guns);
         
     }
 
     @GetMapping("/{id}")
-    public UsedGunEntity findById(@PathVariable("id") String id){
-        return usedGunService.findById(id);
+    public ResponseEntity<UsedGunEntity> findById(@PathVariable("id") String id){
+        UsedGunEntity used_gun = usedGunService.findById(id);
+        return ResponseEntity.ok().body(used_gun);
     }
 
     /*
@@ -56,8 +58,9 @@ public class UsedGunController {
     }
 
     @PutMapping("/{id}")
-    public UsedGunEntity updateUsedGun(@PathVariable("id") String id, @RequestBody UsedGunEntity usedGunEntity){
-        return usedGunService.updateUsedGun(usedGunEntity, id);
+    public ResponseEntity<UsedGunEntity> updateUsedGun(@PathVariable("id") String id, @RequestBody UsedGunEntity usedGunEntity){
+        UsedGunEntity used_gun = usedGunService.updateUsedGun(usedGunEntity, id);
+        return ResponseEntity.ok().body(used_gun);
     }
 
     @DeleteMapping("/{id}")

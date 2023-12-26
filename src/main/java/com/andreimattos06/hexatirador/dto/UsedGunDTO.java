@@ -1,7 +1,5 @@
 package com.andreimattos06.hexatirador.dto;
 
-
-import com.andreimattos06.hexatirador.entity.HabitualityEntity;
 import com.andreimattos06.hexatirador.entity.UsedGunEntity;
 
 import lombok.Getter;
@@ -18,7 +16,7 @@ public class UsedGunDTO {
     private Integer amount;   
     private String serial_number;
 
-    private HabitualityEntity habituality;
+    private UsedGunHabitualityDTO habituality;
     
 
     public UsedGunDTO() {

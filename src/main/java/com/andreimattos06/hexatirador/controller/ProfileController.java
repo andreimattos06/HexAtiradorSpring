@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.andreimattos06.hexatirador.dto.ProfileDTO;
+import com.andreimattos06.hexatirador.entity.HabitualityEntity;
 import com.andreimattos06.hexatirador.entity.ProfileEntity;
 import com.andreimattos06.hexatirador.service.ProfileService;
 
@@ -30,22 +31,30 @@ public class ProfileController {
 
 
     @GetMapping
-    public List<ProfileDTO> findAllProfiles(){
+    public ResponseEntity<List<ProfileDTO>> findAllProfiles(){
         List<ProfileEntity> profiles = profileService.findAllProfiles();
         List<ProfileDTO> list_dto = profiles.stream().map(e -> new ProfileDTO(e)).collect(Collectors.toList());
-        return list_dto;
+        return ResponseEntity.ok().body(list_dto);
         
     }
 
     @GetMapping("/{id}")
-    public ProfileDTO findById(@PathVariable("id") String id){
-        return new ProfileDTO(profileService.findById(id));
+    public ResponseEntity<ProfileDTO> findById(@PathVariable("id") String id){
+        ProfileDTO profile = new ProfileDTO(profileService.findById(id));
+        return ResponseEntity.ok().body(profile);
+    }
+
+    @GetMapping("/{id}/habitualities")
+    public ResponseEntity<List<HabitualityEntity>> findByHabitualities(@PathVariable("id") String id){
+        List<HabitualityEntity> habitualities = profileService.findById(id).getHabitualities();
+        return ResponseEntity.ok().body(habitualities);
     }
 
     
     @GetMapping("/email/{email}")
-    public ProfileDTO findByEmail(@PathVariable("email") String email){        
-        return new ProfileDTO(profileService.findByEmail(email));
+    public ResponseEntity<ProfileDTO> findByEmail(@PathVariable("email") String email){      
+        ProfileDTO profile = new ProfileDTO(profileService.findByEmail(email));
+        return ResponseEntity.ok().body(profile);
     }
     
 
@@ -58,8 +67,9 @@ public class ProfileController {
     }
 
     @PutMapping("/{id}")
-    public ProfileEntity updateProfile(@PathVariable("id") String id, @RequestBody ProfileEntity profileEntity){
-        return profileService.updateProfile(profileEntity, id);
+    public ResponseEntity<ProfileDTO> updateProfile(@PathVariable("id") String id, @RequestBody ProfileEntity profileEntity){
+        ProfileDTO profile = new ProfileDTO(profileService.updateProfile(profileEntity, id));
+        return ResponseEntity.ok().body(profile);
     }
 
     @DeleteMapping("/{id}")

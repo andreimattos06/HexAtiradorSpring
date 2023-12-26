@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.andreimattos06.hexatirador.entity.HabitualityEntity;
-import com.andreimattos06.hexatirador.entity.ProfileEntity;
 import com.andreimattos06.hexatirador.entity.UsedGunEntity;
 
 import lombok.Getter;
@@ -20,7 +19,7 @@ public class HabitualityDTO {
     private String club_name;
     private String city;
     private String state;
-    private ProfileEntity profile;
+    private HabitualityProfileDTO profile;
     private List<UsedGunEntity> used_guns = new ArrayList<>();
     
 

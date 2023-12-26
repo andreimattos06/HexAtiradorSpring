@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.andreimattos06.hexatirador.dto.UsedGunHabitualityDTO;
+
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,9 +28,7 @@ public class UsedGunEntity implements Serializable{
     private Integer amount;   
     private String serial_number;
 
-    @ManyToOne
-    @JoinColumn(name = "habituality_id")
-    private HabitualityEntity habituality;
+    private UsedGunHabitualityDTO habituality;
   
 
 }
