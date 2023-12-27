@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.andreimattos06.hexatirador.dto.HabitualityDTO;
 import com.andreimattos06.hexatirador.entity.HabitualityEntity;
 import com.andreimattos06.hexatirador.repository.HabitualityRepository;
 import com.andreimattos06.hexatirador.service.exceptions.ResourceNotFoundException;
@@ -24,6 +23,11 @@ public class HabitualityService {
 
     public HabitualityEntity findById(String id) {
         Optional<HabitualityEntity> obj = habitualityRepository.findById(id);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
+    public List<HabitualityEntity> findAllByProfileId(String id){
+        Optional<List<HabitualityEntity>> obj = habitualityRepository.findAllByProfileId(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
@@ -53,15 +57,6 @@ public class HabitualityService {
         
     }
 
-    public HabitualityEntity fromDTO(HabitualityDTO habitiality){
-        return HabitualityEntity.builder()
-        .city(habitiality.getCity())
-        .club_name(habitiality.getClub_name())
-        .date(habitiality.getDate())
-        .state(habitiality.getState())
-        .profile(habitiality.getProfile())
-        .build();
-    }
 
     /*
     public void deleteHabitualityByEmail(String email) {

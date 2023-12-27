@@ -2,7 +2,6 @@ package com.andreimattos06.hexatirador.controller;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.andreimattos06.hexatirador.dto.HabitualityDTO;
 import com.andreimattos06.hexatirador.entity.HabitualityEntity;
 import com.andreimattos06.hexatirador.service.HabitualityService;
 
@@ -30,15 +28,20 @@ public class HabitualityController {
 
 
     @GetMapping
-    public ResponseEntity<List<HabitualityDTO>> findAllHabitualitys(){
-        List<HabitualityEntity> habitualities = habitualityService.findAllHabitualitys();      
-        List<HabitualityDTO> habitualities_dto = habitualities.stream().map(e -> new HabitualityDTO(e)).collect(Collectors.toList());  
-        return ResponseEntity.ok().body(habitualities_dto);
+    public ResponseEntity<List<HabitualityEntity>> findAllHabitualitys(){
+        List<HabitualityEntity> habitualities = habitualityService.findAllHabitualitys();       
+        return ResponseEntity.ok().body(habitualities);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HabitualityDTO> findById(@PathVariable("id") String id){
-        HabitualityDTO habituality = new HabitualityDTO(habitualityService.findById(id));
+    public ResponseEntity<HabitualityEntity> findById(@PathVariable("id") String id){
+        HabitualityEntity habituality = habitualityService.findById(id);
+        return ResponseEntity.ok().body(habituality);
+    }
+
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<List<HabitualityEntity>> findAllByProfileId(@PathVariable("id") String id){
+        List<HabitualityEntity> habituality = habitualityService.findAllByProfileId(id);
         return ResponseEntity.ok().body(habituality);
     }
 
@@ -50,16 +53,15 @@ public class HabitualityController {
     */
 
     @PostMapping
-    public ResponseEntity<Object> saveHabituality(@RequestBody HabitualityDTO habitualityDTO){
-        HabitualityEntity habituality = habitualityService.fromDTO(habitualityDTO);
-        habituality = habitualityService.saveHabituality(habituality);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(habituality.getId()).toUri();
+    public ResponseEntity<Object> saveHabituality(@RequestBody HabitualityEntity habitualityEntity){
+        habitualityEntity = habitualityService.saveHabituality(habitualityEntity);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(habitualityEntity.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<HabitualityDTO> updateHabituality(@PathVariable("id") String id, @RequestBody HabitualityEntity habitualityEntity){
-        HabitualityDTO habituality = new HabitualityDTO(habitualityService.updateHabituality(habitualityEntity, id));
+    public ResponseEntity<HabitualityEntity> updateHabituality(@PathVariable("id") String id, @RequestBody HabitualityEntity habitualityEntity){
+        HabitualityEntity habituality = habitualityService.updateHabituality(habitualityEntity, id);
         return ResponseEntity.ok().body(habituality);
     }
 

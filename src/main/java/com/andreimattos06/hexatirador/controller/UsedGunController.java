@@ -2,7 +2,6 @@ package com.andreimattos06.hexatirador.controller;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.andreimattos06.hexatirador.dto.UsedGunDTO;
 import com.andreimattos06.hexatirador.entity.UsedGunEntity;
 import com.andreimattos06.hexatirador.service.UsedGunService;
 
@@ -30,16 +28,15 @@ public class UsedGunController {
 
 
     @GetMapping
-    public ResponseEntity<List<UsedGunDTO>> findAllUsedGuns(){
+    public ResponseEntity<List<UsedGunEntity>> findAllUsedGuns(){
         List<UsedGunEntity> used_guns = usedGunService.findAllUsedGuns();
-        List<UsedGunDTO> used_guns_dto = used_guns.stream().map(e -> new UsedGunDTO(e)).collect(Collectors.toList());
-        return ResponseEntity.ok().body(used_guns_dto);
+        return ResponseEntity.ok().body(used_guns);
         
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsedGunDTO> findById(@PathVariable("id") String id){
-        UsedGunDTO used_gun = new UsedGunDTO(usedGunService.findById(id));
+    public ResponseEntity<UsedGunEntity> findById(@PathVariable("id") String id){
+        UsedGunEntity used_gun = usedGunService.findById(id);
         return ResponseEntity.ok().body(used_gun);
     }
 
@@ -51,17 +48,15 @@ public class UsedGunController {
     */
 
     @PostMapping
-    public ResponseEntity<Object> saveUsedGun(@RequestBody UsedGunDTO usedGunDTO){
-        UsedGunEntity usedGunEntity = usedGunService.fromDTO(usedGunDTO);
-        usedGunEntity = usedGunService.saveUsedGun(usedGunEntity);
-        
+    public ResponseEntity<Object> saveUsedGun(@RequestBody UsedGunEntity usedGunEntity){
+        usedGunEntity = usedGunService.saveUsedGun(usedGunEntity);        
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(usedGunEntity.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsedGunDTO> updateUsedGun(@PathVariable("id") String id, @RequestBody UsedGunEntity usedGunEntity){
-        UsedGunDTO used_gun = new UsedGunDTO(usedGunService.updateUsedGun(usedGunEntity, id));
+    public ResponseEntity<UsedGunEntity> updateUsedGun(@PathVariable("id") String id, @RequestBody UsedGunEntity usedGunEntity){
+        UsedGunEntity used_gun = usedGunService.updateUsedGun(usedGunEntity, id);
         return ResponseEntity.ok().body(used_gun);
     }
 

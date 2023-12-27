@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.andreimattos06.hexatirador.dto.HabitualityDTO;
 import com.andreimattos06.hexatirador.dto.ProfileDTO;
 import com.andreimattos06.hexatirador.entity.HabitualityEntity;
 import com.andreimattos06.hexatirador.entity.ProfileEntity;
@@ -46,10 +45,9 @@ public class ProfileController {
     }
 
     @GetMapping("/{id}/habitualities")
-    public ResponseEntity<List<HabitualityDTO>> findByHabitualities(@PathVariable("id") String id){
+    public ResponseEntity<List<HabitualityEntity>> findByHabitualities(@PathVariable("id") String id){
         List<HabitualityEntity> habitualities = profileService.findById(id).getHabitualities();
-        List<HabitualityDTO> habitualities_dto = habitualities.stream().map(e -> new HabitualityDTO(e)).collect(Collectors.toList());
-        return ResponseEntity.ok().body(habitualities_dto);
+        return ResponseEntity.ok().body(habitualities);
     }
 
     
