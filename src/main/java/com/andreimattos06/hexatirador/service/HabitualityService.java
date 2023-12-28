@@ -31,36 +31,20 @@ public class HabitualityService {
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    /*public Optional<HabitualityEntity> findByEmail(String email) {
-        return habitualityRepository.findByEmail(email);
-    }*/
 
     public HabitualityEntity saveHabituality(HabitualityEntity habitualityEntity) {
         return habitualityRepository.save(habitualityEntity);
     }
 
     public HabitualityEntity updateHabituality(HabitualityEntity habitualityEntity, String id) {
-        /*HabitualityEntity entity = habitualityRepository.getReferenceById(id);
-        updateData(habitualityEntity, entity);*/
         return habitualityRepository.save(habitualityEntity);
     }
 
-    /*private void updateData(HabitualityEntity habitualityEntity, HabitualityEntity habituality) {
-        habituality.setCity(habitualityEntity.getCity());
-        habituality.setClub_name(habitualityEntity.getClub_name());
-        habituality.setDate(habitualityEntity.getDate());
-        habituality.setState(habitualityEntity.getState());
-    }*/
 
     public void deleteHabitualityById(String id) {        
             habitualityRepository.deleteById(id);      
         
     }
 
-
-    /*
-    public void deleteHabitualityByEmail(String email) {
-        habitualityRepository.deleteByEmail(email);
-    }*/
 
 }

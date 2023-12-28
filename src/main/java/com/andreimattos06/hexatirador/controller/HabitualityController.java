@@ -45,13 +45,6 @@ public class HabitualityController {
         return ResponseEntity.ok().body(habituality);
     }
 
-    /*
-    @GetMapping("/{email}")
-    public Optional<HabitualityEntity> findByEmail(@PathVariable("email") String email){
-        return habitualityService.findByEmail(email);
-    }
-    */
-
     @PostMapping
     public ResponseEntity<Object> saveHabituality(@RequestBody HabitualityEntity habitualityEntity){
         habitualityEntity = habitualityService.saveHabituality(habitualityEntity);
@@ -70,10 +63,4 @@ public class HabitualityController {
         habitualityService.deleteHabitualityById(id);
     }
 
-    /*
-    @DeleteMapping
-    public void deleteByEmail(@PathVariable("email") String email){
-        habitualityService.deleteHabitualityByEmail(email);
-    }
-    */
 }

@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.andreimattos06.hexatirador.entity.ProfileEntity;
 
-/**
- * ProfileRepository
- */
+
 @Repository
 public interface ProfileRepository extends MongoRepository<ProfileEntity, String>{
 

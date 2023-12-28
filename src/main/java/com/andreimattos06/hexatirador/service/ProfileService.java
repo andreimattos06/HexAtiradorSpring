@@ -37,18 +37,9 @@ public class ProfileService {
     }
 
     public ProfileEntity updateProfile(ProfileEntity profileEntity, String id) {
-        /*ProfileEntity profile = profileRepository.getReferenceById(id);
-        updateData(profileEntity, profile);*/
         return profileRepository.save(profileEntity);
     }
 
-    /*private void updateData(ProfileEntity profileEntity, ProfileEntity profile) {
-        profile.setEmail(profileEntity.getEmail());
-        profile.setFirst_name(profileEntity.getFirst_name());
-        profile.setGender(profileEntity.getGender());
-        profile.setLast_name(profileEntity.getLast_name());
-        profile.setPassword(profileEntity.getPassword());
-    }*/
 
     public void deleteProfileById(String id) {
         profileRepository.deleteById(id);
@@ -61,6 +52,10 @@ public class ProfileService {
     public ProfileEntity fromDTO(ProfileDTO profile){
         return ProfileEntity.builder().email(profile.getEmail()).first_name(profile.getFirst_name()).gender(profile.getGender())
         .last_name(profile.getLast_name()).build();
+    }
+
+    public boolean emailAlreadyRegistered(String email){
+        return profileRepository.findByEmail(email).isPresent();
     }
 
 }

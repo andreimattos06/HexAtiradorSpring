@@ -40,12 +40,6 @@ public class UsedGunController {
         return ResponseEntity.ok().body(used_gun);
     }
 
-    /*
-    @GetMapping("/{email}")
-    public Optional<UsedGunEntity> findByEmail(@PathVariable("email") String email){
-        return usedGunService.findByEmail(email);
-    }
-    */
 
     @PostMapping
     public ResponseEntity<Object> saveUsedGun(@RequestBody UsedGunEntity usedGunEntity){
@@ -65,10 +59,4 @@ public class UsedGunController {
         usedGunService.deleteUsedGunById(id);
     }
 
-    /*
-    @DeleteMapping
-    public void deleteByEmail(@PathVariable("email") String email){
-        usedGunService.deleteUsedGunByEmail(email);
-    }
-    */
 }

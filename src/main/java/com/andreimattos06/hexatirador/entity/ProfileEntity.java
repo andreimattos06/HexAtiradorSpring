@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-//import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +26,8 @@ public class ProfileEntity implements Serializable{
     private String id;
     private String first_name;
     private String last_name;
-    //@Column(unique = true)
+    
+    @Indexed(unique = true)
     private String email;
     private String password;
     private String gender;

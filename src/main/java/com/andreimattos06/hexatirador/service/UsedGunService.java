@@ -26,36 +26,17 @@ public class UsedGunService {
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    /*public Optional<UsedGunEntity> findByEmail(String email) {
-        return usedGunRepository.findByEmail(email);
-    }*/
-
     public UsedGunEntity saveUsedGun(UsedGunEntity usedGunEntity) {
         return usedGunRepository.save(usedGunEntity);
     }
 
     public UsedGunEntity updateUsedGun(UsedGunEntity usedGunEntity, String id) {
-        /*UsedGunEntity usedgun = usedGunRepository.getReferenceById(id);
-        updateData(usedGunEntity, usedgun);*/
         return usedGunRepository.save(usedGunEntity);
     }
 
-    /*private void updateData(UsedGunEntity usedGunEntity, UsedGunEntity usedgun) {
-        usedgun.setAmount(usedGunEntity.getAmount());
-        usedgun.setBrand(usedGunEntity.getBrand());
-        usedgun.setCalibre(usedGunEntity.getCalibre());
-        usedgun.setGun(usedGunEntity.getGun());
-        usedgun.setSerial_number(usedGunEntity.getSerial_number());
-        
-    }*/
 
     public void deleteUsedGunById(String id) {
         usedGunRepository.deleteById(id);
     }
-
-    /*
-    public void deleteUsedGunByEmail(String email) {
-        usedGunRepository.deleteByEmail(email);
-    }*/
 
 }
