@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.andreimattos06.hexatirador.dto.UsedGunCompetitionDTO;
 import com.andreimattos06.hexatirador.dto.UsedGunHabitualityDTO;
 import com.andreimattos06.hexatirador.dto.UsedGunProfileDTO;
 
@@ -32,6 +33,7 @@ public class UsedGunEntity implements Serializable{
     private UsedGunProfileDTO profile;
 
     private UsedGunHabitualityDTO habituality;
+    private UsedGunCompetitionDTO competition;
   
 
 }

@@ -1,8 +1,6 @@
 package com.andreimattos06.hexatirador.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.stream.Collectors;
 

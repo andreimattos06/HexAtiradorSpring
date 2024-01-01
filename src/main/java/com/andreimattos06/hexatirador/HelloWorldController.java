@@ -11,10 +11,14 @@ import com.andreimattos06.hexatirador.controller.HabitualityController;
 import com.andreimattos06.hexatirador.controller.ProfileController;
 import com.andreimattos06.hexatirador.controller.UsedGunController;
 import com.andreimattos06.hexatirador.dto.HabitualityProfileDTO;
+import com.andreimattos06.hexatirador.dto.UsedGunCompetitionDTO;
 import com.andreimattos06.hexatirador.dto.UsedGunHabitualityDTO;
+import com.andreimattos06.hexatirador.entity.CompetitionEntity;
 import com.andreimattos06.hexatirador.entity.HabitualityEntity;
 import com.andreimattos06.hexatirador.entity.ProfileEntity;
 import com.andreimattos06.hexatirador.entity.UsedGunEntity;
+import com.andreimattos06.hexatirador.entity.enums.CompetitionModality;
+import com.andreimattos06.hexatirador.repository.CompetitionRepository;
 import com.andreimattos06.hexatirador.repository.HabitualityRepository;
 import com.andreimattos06.hexatirador.repository.ProfileRepository;
 import com.andreimattos06.hexatirador.repository.UsedGunRepository;
@@ -42,13 +46,17 @@ public class HelloWorldController {
         @Autowired
         UsedGunRepository usedGunRepository;
 
+        @Autowired
+        CompetitionRepository competitionRepository;
 
-    @GetMapping(path = "/hello")
+
+    @GetMapping(path = "/auth/hello")
     public String helloWorld() {
 
         habitualityRepository.deleteAll();
         profileRepository.deleteAll();
         usedGunRepository.deleteAll();
+        competitionRepository.deleteAll();;
 
         ProfileEntity profile1 = ProfileEntity.builder()
         .email("andreimattos06@gmail.com")
@@ -90,16 +98,64 @@ public class HelloWorldController {
         .state("GO")
         .build();
 
+        HabitualityEntity habituality3 = HabitualityEntity.builder()
+        .city("Cristalina")
+        .club_name("CACC")
+        .date(Instant.now())
+        .profile(new HabitualityProfileDTO(profile2))
+        .state("GO")
+        .build();
+
+        HabitualityEntity habituality4 = HabitualityEntity.builder()
+        .city("Caarapó")
+        .club_name("Caarapo Tiro")
+        .date(Instant.now())
+        .profile(new HabitualityProfileDTO(profile1))
+        .state("MS")
+        .build();
+
         habitualityRepository.save(habituality1);
         habitualityRepository.save(habituality2);
+        habitualityRepository.save(habituality3);
+        habitualityRepository.save(habituality4);
+
+        CompetitionEntity competition1 = new CompetitionEntity(
+                null, Instant.now(), "Dourados Clube",
+                "CBC - Tiro no Prato", "Dourados", "MS", CompetitionModality.valueOfString("Multigun"), new HabitualityProfileDTO(profile1),
+                true                
+        );
+
+        CompetitionEntity competition2 = new CompetitionEntity(
+                null, Instant.now(), "Amambai Clube",
+                "CBC - Tiro no Disco", "Amambai", "MS", CompetitionModality.valueOfString("NRA"), new HabitualityProfileDTO(profile2),
+                false                
+        );
+
+        CompetitionEntity competition3 = new CompetitionEntity(
+                null, Instant.now(), "Dourados Clube",
+                "CBC - Tiro no Prato", "Dourados", "MS", CompetitionModality.valueOfString("Multigun"), new HabitualityProfileDTO(profile1),
+                true                
+        );
+
+        CompetitionEntity competition4 = new CompetitionEntity(
+                null, Instant.now(), "Amambai Clube",
+                "CBC - Tiro no Disco", "Amambai", "MS", CompetitionModality.valueOfString("NRA"), new HabitualityProfileDTO(profile2),
+                false                
+        );
 
 
+        competitionRepository.save(competition1);
+        competitionRepository.save(competition2);
+        competitionRepository.save(competition3);
+        competitionRepository.save(competition4);
 
-
-        profile1.getHabitualities().addAll(Arrays.asList(habituality1));
+        profile1.getHabitualities().addAll(Arrays.asList(habituality1, habituality2));
+        profile1.getCompetitions().addAll(Arrays.asList(competition1, competition2));
         profileRepository.save(profile1);
-        profile2.getHabitualities().addAll(Arrays.asList(habituality2));
+        profile2.getHabitualities().addAll(Arrays.asList(habituality3, habituality4));
+        profile2.getCompetitions().addAll(Arrays.asList(competition3, competition4));
         profileRepository.save(profile2);
+        
 
 
 
@@ -110,7 +166,7 @@ public class HelloWorldController {
        .brand("Glock")
        .calibre("9mm")
        .gun("TS9")
-       .habituality(new UsedGunHabitualityDTO(habituality1))
+       .competition(new UsedGunCompetitionDTO(competition1))
        .serial_number("123456")
        .build();
 
@@ -119,7 +175,7 @@ public class HelloWorldController {
        .brand("Sig Sauer")
        .calibre(".45 ACP")
        .gun("GH9")
-       .habituality(new UsedGunHabitualityDTO(habituality2))
+       .competition(new UsedGunCompetitionDTO(competition2))
        .serial_number("78910")
        .build();
 
@@ -146,57 +202,18 @@ public class HelloWorldController {
        usedGunRepository.save(usedgun3);
        usedGunRepository.save(usedgun4);
 
-       habituality1.getUsed_guns().addAll(Arrays.asList(usedgun1));
-       habitualityRepository.save(habituality1);
-       habituality2.getUsed_guns().addAll(Arrays.asList(usedgun2));
-       habitualityRepository.save(habituality2);
-       habituality1.getUsed_guns().addAll(Arrays.asList(usedgun3));
-       habitualityRepository.save(habituality1);
-       habituality2.getUsed_guns().addAll(Arrays.asList(usedgun4));
-       habitualityRepository.save(habituality2);
+       competition1.getUsed_guns().addAll(Arrays.asList(usedgun1));
+       competitionRepository.save(competition1);
+       competition2.getUsed_guns().addAll(Arrays.asList(usedgun2));
+       competitionRepository.save(competition2);
+       competition1.getUsed_guns().addAll(Arrays.asList(usedgun3));
+       competitionRepository.save(competition1);
+       competition2.getUsed_guns().addAll(Arrays.asList(usedgun4));
+       competitionRepository.save(competition2);
 
+       System.out.println(competition1.getModality().toString());
+       System.out.println(competition1.getModality().getName());
 
-/*
-        HabitualityEntity h1 = HabitualityEntity.builder()
-                .id(null)
-                .date(Instant.now())
-                .club_name("Tiro certo")
-                .city("Ponta Porã")
-                .state("MS")
-                .profile(p1.get())
-                .build();
-        
-
-
-        UsedGunEntity ug1 = UsedGunEntity.builder()
-                .id(null)
-                .amount(33)
-                .brand("Colt")
-                .calibre("5,56")
-                .gun("M4A4")
-                .serial_number("AEE21")
-                .habituality(h1)
-                .build();
-
-
-        UsedGunEntity ug2 = UsedGunEntity.builder()
-                .id(null)
-                .amount(66)
-                .brand("AK")
-                .calibre("7,62")
-                .gun("47")
-                .serial_number("5D81231")
-                .habituality(h1)
-                .build();        
-
-        
-
-        habitualityService.saveHabituality(h1);
-        usedGunService.saveUsedGun(ug2);
-        usedGunService.saveUsedGun(ug1);
-
-
-*/
         return "abcdefg";
     }
 }
