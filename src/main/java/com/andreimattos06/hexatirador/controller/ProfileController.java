@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,9 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.andreimattos06.hexatirador.dto.LoginDTO;
 import com.andreimattos06.hexatirador.dto.ProfileDTO;
+import com.andreimattos06.hexatirador.dto.RegisterDTO;
 import com.andreimattos06.hexatirador.entity.HabitualityEntity;
 import com.andreimattos06.hexatirador.entity.ProfileEntity;
+import com.andreimattos06.hexatirador.service.JwtService;
 import com.andreimattos06.hexatirador.service.ProfileService;
 
 @RestController
@@ -28,6 +33,13 @@ public class ProfileController {
 
     @Autowired
     private ProfileService profileService;
+
+    @Autowired 
+    private JwtService jwtService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
 
     @GetMapping
     public ResponseEntity<List<ProfileDTO>> findAllProfiles() {
@@ -55,15 +67,14 @@ public class ProfileController {
         return ResponseEntity.ok().body(profile);
     }
 
-    @PostMapping
-    public ResponseEntity<Object> saveProfile(@RequestBody ProfileEntity profile) {
+    @PostMapping("/auth/register")
+    public ResponseEntity<Object> saveProfile(@RequestBody RegisterDTO profile) {
         if (!profileService.emailAlreadyRegistered(profile.getEmail())) {
 
             if (validateNewRegister(profile)) {
-                profile.setId(null);
                 profile.setPassword(BCrypt.hashpw(profile.getPassword(), BCrypt.gensalt()));
-                profile = profileService.saveProfile(profile);
-                URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(profile.getId())
+                ProfileEntity profileEntity = profileService.saveProfile(profile.fromDTO(profile));
+                URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(profileEntity.getId())
                         .toUri();
                 return ResponseEntity.created(uri).build();
             }
@@ -76,6 +87,16 @@ public class ProfileController {
         }
 
     }
+
+    @PostMapping("/auth/login")
+    public String login(@RequestBody LoginDTO loginDTO){
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
+        ProfileEntity profile = profileService.findByEmail(loginDTO.getEmail());
+
+        String jwt = jwtService.generateToken(profile);
+        return jwt;
+
+    } 
 
     /*@GetMapping("/login/{id}")   //Just Testing Encryptation --Working Fine
     public ResponseEntity<Object> login(@PathVariable("id") String id){
@@ -100,7 +121,7 @@ public class ProfileController {
         profileService.deleteProfileById(id);
     }
 
-    private boolean validateNewRegister(ProfileEntity profile) {
+    private boolean validateNewRegister(RegisterDTO profile) {
         if (!profile.getEmail().contains("@")) {
             return false;
             

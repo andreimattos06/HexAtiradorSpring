@@ -8,7 +8,10 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.andreimattos06.hexatirador.entity.enums.Role;
 
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -34,10 +37,7 @@ public class ProfileEntity implements UserDetails{
     private String password;
     private String gender;
     private Byte shooter_level;
-    // TODO 
-    //@DBRef(lazy = true)
-    //@Builder.Default
-    //private List<CompetitionEntity> competitions = new ArrayList<>();
+    private Role role;
 
     @DBRef(lazy = true)
     @Builder.Default
@@ -50,8 +50,7 @@ public class ProfileEntity implements UserDetails{
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override

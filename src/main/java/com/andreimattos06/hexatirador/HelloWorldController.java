@@ -50,7 +50,7 @@ public class HelloWorldController {
         CompetitionRepository competitionRepository;
 
 
-    @GetMapping(path = "/auth/hello")
+    @GetMapping(path = "/profiles/auth/hello")
     public String helloWorld() {
 
         habitualityRepository.deleteAll();
