@@ -59,11 +59,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
 
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response);        
 
-        System.out.println(user_email);
-
-        throw new UnsupportedOperationException("Unimplemented method 'doFilterInternal'");
     }
 
 }
