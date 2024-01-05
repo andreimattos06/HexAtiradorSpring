@@ -32,7 +32,7 @@ public class JwtService {
         return claimResolver.apply(claims);
     }
 
-    public String generateToken( //DEPRECATED -- NEED TO UPDATE
+    public String generateToken( 
         Map<String, Object> extraClaims, 
         UserDetails userDetails){
 
@@ -55,7 +55,7 @@ public class JwtService {
 
     }
 
-    public String generateToken( //DEPRECATED -- NEED TO UPDATE 
+    public String generateToken( 
         UserDetails userDetails){
             
             return Jwts.builder()

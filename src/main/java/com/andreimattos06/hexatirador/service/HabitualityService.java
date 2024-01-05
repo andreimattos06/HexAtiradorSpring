@@ -26,9 +26,9 @@ public class HabitualityService {
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public List<HabitualityEntity> findAllByProfileId(String id){
-        Optional<List<HabitualityEntity>> obj = habitualityRepository.findAllByProfileId(id);
-        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+    public List<HabitualityEntity> findAllByProfileEmail(String email){
+        Optional<List<HabitualityEntity>> obj = habitualityRepository.findAllByProfileEmail(email);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(email));
     }
 
 

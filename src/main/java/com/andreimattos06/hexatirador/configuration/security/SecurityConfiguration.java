@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -23,6 +22,17 @@ public class SecurityConfiguration {
     public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception{
 
         http
+        .csrf((crsf) -> crsf.disable())    
+        .authorizeHttpRequests((authorize) -> authorize
+        .requestMatchers("/profiles/auth/**").permitAll()
+        .anyRequest().authenticated())
+        .authenticationProvider(authenticationProvider)
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+        ;
+        
+        
+        /*
+        http
         .csrf()
         .disable()
         .authorizeHttpRequests()
@@ -36,7 +46,7 @@ public class SecurityConfiguration {
         .and()
         .authenticationProvider(authenticationProvider)
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-        
+         */
         return http.build();
     }
     

@@ -36,7 +36,7 @@ public class ProfileService {
         return profileRepository.save(profileEntity);
     }
 
-    public ProfileEntity updateProfile(ProfileEntity profileEntity, String id) {
+    public ProfileEntity updateProfile(ProfileEntity profileEntity) {
         return profileRepository.save(profileEntity);
     }
 

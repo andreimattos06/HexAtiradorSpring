@@ -18,6 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.andreimattos06.hexatirador.entity.HabitualityEntity;
 import com.andreimattos06.hexatirador.service.HabitualityService;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/habitualities")
 public class HabitualityController {
@@ -39,9 +41,10 @@ public class HabitualityController {
         return ResponseEntity.ok().body(habituality);
     }
 
-    @GetMapping("/profile/{id}")
-    public ResponseEntity<List<HabitualityEntity>> findAllByProfileId(@PathVariable("id") String id){
-        List<HabitualityEntity> habituality = habitualityService.findAllByProfileId(id);
+    @GetMapping("/profile")
+    public ResponseEntity<List<HabitualityEntity>> findAllByProfileId(HttpServletRequest request){
+        String user_email = request.getAttribute("user_email").toString();
+        List<HabitualityEntity> habituality = habitualityService.findAllByProfileEmail(user_email);
         return ResponseEntity.ok().body(habituality);
     }
 

@@ -39,12 +39,14 @@ public class ProfileEntity implements UserDetails{
     private Byte shooter_level;
     private Role role;
 
-    @DBRef(lazy = true)
+    
     @Builder.Default
+    @DBRef(lazy = true)
     private List<HabitualityEntity> habitualities = new ArrayList<>();
 
-    @DBRef(lazy = true)
+    
     @Builder.Default
+    @DBRef(lazy = true)
     private List<CompetitionEntity> competitions = new ArrayList<>();
 
     

@@ -22,7 +22,7 @@ public class RegisterDTO {
 
 
     public ProfileEntity fromDTO(RegisterDTO register){
-        return new ProfileEntity().builder()
+        return ProfileEntity.builder()
         .email(register.getEmail())
         .first_name(register.getFirst_name())
         .gender(register.getGender())

@@ -3,6 +3,7 @@ package com.andreimattos06.hexatirador;
 import java.time.Instant;
 import java.util.Arrays;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import com.andreimattos06.hexatirador.entity.HabitualityEntity;
 import com.andreimattos06.hexatirador.entity.ProfileEntity;
 import com.andreimattos06.hexatirador.entity.UsedGunEntity;
 import com.andreimattos06.hexatirador.entity.enums.CompetitionModality;
+import com.andreimattos06.hexatirador.entity.enums.Role;
 import com.andreimattos06.hexatirador.repository.CompetitionRepository;
 import com.andreimattos06.hexatirador.repository.HabitualityRepository;
 import com.andreimattos06.hexatirador.repository.ProfileRepository;
@@ -63,7 +65,8 @@ public class HelloWorldController {
         .first_name("Andrei")
         .gender("Masculino")
         .last_name("dos Santos Mattos")
-        .password("12345")
+        .password(BCrypt.hashpw("12345", BCrypt.gensalt()))
+        .role(Role.USER)
         .build();
 
         ProfileEntity profile2 = ProfileEntity.builder()
@@ -210,9 +213,6 @@ public class HelloWorldController {
        competitionRepository.save(competition1);
        competition2.getUsed_guns().addAll(Arrays.asList(usedgun4));
        competitionRepository.save(competition2);
-
-       System.out.println(competition1.getModality().toString());
-       System.out.println(competition1.getModality().getName());
 
         return "abcdefg";
     }

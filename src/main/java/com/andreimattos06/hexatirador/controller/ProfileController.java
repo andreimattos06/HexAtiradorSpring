@@ -27,6 +27,8 @@ import com.andreimattos06.hexatirador.entity.ProfileEntity;
 import com.andreimattos06.hexatirador.service.JwtService;
 import com.andreimattos06.hexatirador.service.ProfileService;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/profiles")
 public class ProfileController {
@@ -34,14 +36,14 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
-    @Autowired 
+    @Autowired
     private JwtService jwtService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
 
-    @GetMapping
+    @GetMapping("/all") // Later this will be a ADMIN only route, for now its avaiable for all users for ease.
     public ResponseEntity<List<ProfileDTO>> findAllProfiles() {
         List<ProfileEntity> profiles = profileService.findAllProfiles();
         List<ProfileDTO> list_dto = profiles.stream().map(e -> new ProfileDTO(e)).collect(Collectors.toList());
@@ -49,23 +51,36 @@ public class ProfileController {
 
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProfileDTO> findById(@PathVariable("id") String id) {
-        ProfileDTO profile = new ProfileDTO(profileService.findById(id));
+    @GetMapping
+    public ResponseEntity<ProfileDTO> findByEmail(HttpServletRequest request) {
+        String user_email = request.getAttribute("user_email").toString();
+        ProfileDTO profile = new ProfileDTO(profileService.findByEmail(user_email));
         return ResponseEntity.ok().body(profile);
     }
 
-    @GetMapping("/{id}/habitualities")
-    public ResponseEntity<List<HabitualityEntity>> findByHabitualities(@PathVariable("id") String id) {
-        List<HabitualityEntity> habitualities = profileService.findById(id).getHabitualities();
-        return ResponseEntity.ok().body(habitualities);
+    @DeleteMapping
+    public void deleteByEmail(HttpServletRequest request) {
+        String user_email = request.getAttribute("user_email").toString();
+        profileService.deleteProfileByEmail(user_email);
     }
 
-    @GetMapping("/email/{email}")
-    public ResponseEntity<ProfileDTO> findByEmail(@PathVariable("email") String email) {
-        ProfileDTO profile = new ProfileDTO(profileService.findByEmail(email));
-        return ResponseEntity.ok().body(profile);
+    @PutMapping
+    public ResponseEntity<Object> updateProfile(HttpServletRequest request,
+            @RequestBody ProfileDTO profileDTO) {
+
+        String user_email = request.getAttribute("user_email").toString();
+        if (profileDTO.getEmail().equals(user_email)) {
+            ProfileEntity profile = profileService.findByEmail(user_email);
+            profile.setFirst_name(profileDTO.getFirst_name());
+            profile.setLast_name(profileDTO.getLast_name());
+            profile.setGender(profileDTO.getGender());
+            profile = profileService.updateProfile(profile);
+            return ResponseEntity.ok().body(profile);
+        }
+        return ResponseEntity.badRequest().body("Provided user doesn't match token information.");
     }
+
+    // -------Start of authentication and register functions, this two routes are not token protected ---------//
 
     @PostMapping("/auth/register")
     public ResponseEntity<Object> saveProfile(@RequestBody RegisterDTO profile) {
@@ -74,11 +89,11 @@ public class ProfileController {
             if (validateNewRegister(profile)) {
                 profile.setPassword(BCrypt.hashpw(profile.getPassword(), BCrypt.gensalt()));
                 ProfileEntity profileEntity = profileService.saveProfile(profile.fromDTO(profile));
-                URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(profileEntity.getId())
+                URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                        .buildAndExpand(profileEntity.getId())
                         .toUri();
                 return ResponseEntity.created(uri).build();
-            }
-            else{
+            } else {
                 return ResponseEntity.badRequest().body("Missing or inconsistente information.");
             }
 
@@ -89,42 +104,22 @@ public class ProfileController {
     }
 
     @PostMapping("/auth/login")
-    public String login(@RequestBody LoginDTO loginDTO){
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
+    public String login(@RequestBody LoginDTO loginDTO) {
+        authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
         ProfileEntity profile = profileService.findByEmail(loginDTO.getEmail());
 
         String jwt = jwtService.generateToken(profile);
         return jwt;
 
-    } 
-
-    /*@GetMapping("/login/{id}")   //Just Testing Encryptation --Working Fine
-    public ResponseEntity<Object> login(@PathVariable("id") String id){
-        if (BCrypt.checkpw(id, "$2a$10$UpGsqppCagbaCK0BQZ1xTeEVbjjOTnif/SO7w6/lq23V/VctDX1TO")){
-            return ResponseEntity.badRequest().body("Ok.");
-        }
-        else{
-            return ResponseEntity.badRequest().body("Nop.");
-        }
-    }
-    */
-
-    @PutMapping("/{id}")
-    public ResponseEntity<ProfileDTO> updateProfile(@PathVariable("id") String id,
-            @RequestBody ProfileEntity profileEntity) {
-        ProfileDTO profile = new ProfileDTO(profileService.updateProfile(profileEntity, id));
-        return ResponseEntity.ok().body(profile);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") String id) {
-        profileService.deleteProfileById(id);
-    }
+    // -----------Start of Functions---------------- //
 
     private boolean validateNewRegister(RegisterDTO profile) {
         if (!profile.getEmail().contains("@")) {
             return false;
-            
+
         }
         if (profile.getPassword().length() < 3) {
             return false;
