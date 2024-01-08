@@ -59,4 +59,24 @@ public class UsedGunController {
         usedGunService.deleteUsedGunById(id);
     }
 
+    static boolean validateUsedGunHabituality(UsedGunEntity used_gun){
+        if (used_gun.getAmount() <= 0 && used_gun.getBrand().isEmpty()
+        && used_gun.getCalibre().isEmpty() && used_gun.getHabituality() == null
+        && used_gun.getGun().isEmpty() && used_gun.getSerial_number().isEmpty()){
+            return false;
+        }
+
+        return true;
+    }
+
+    static boolean validateUsedGunCompetition(UsedGunEntity used_gun){
+        if (used_gun.getAmount() <= 0 && used_gun.getBrand().isEmpty()
+        && used_gun.getCalibre().isEmpty() && used_gun.getCompetition() == null
+        && used_gun.getGun().isEmpty() && used_gun.getSerial_number().isEmpty()){
+            return false;
+        }
+
+        return true;
+    }
+
 }

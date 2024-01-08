@@ -8,7 +8,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -56,12 +55,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
 
-
-
-
-                request.setAttribute("user_email", authToken.getName());
+                request.setAttribute("user_email", authToken.getName()); //This part attach the email to the request, before proceding to the route code. So the route can read this information from the token.
                 //System.out.println(SecurityContextHolder.getContext().getAuthentication().getCredentials());
-
             }
         }
 

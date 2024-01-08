@@ -13,6 +13,5 @@ import com.andreimattos06.hexatirador.entity.HabitualityEntity;
 @Repository
 public interface HabitualityRepository extends MongoRepository<HabitualityEntity, String>{
 
-    public Optional<List<HabitualityEntity>> findAllByProfileEmail(String email);
-
+    public Optional<List<HabitualityEntity>> findByProfileEmail(String email);
 }

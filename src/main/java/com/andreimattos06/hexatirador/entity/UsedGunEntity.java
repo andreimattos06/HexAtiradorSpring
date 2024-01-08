@@ -6,7 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.andreimattos06.hexatirador.dto.UsedGunCompetitionDTO;
 import com.andreimattos06.hexatirador.dto.UsedGunHabitualityDTO;
-import com.andreimattos06.hexatirador.dto.UsedGunProfileDTO;
 
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -30,7 +29,6 @@ public class UsedGunEntity implements Serializable{
     private Integer amount;   
     private String serial_number;
 
-    private UsedGunProfileDTO profile;
 
     private UsedGunHabitualityDTO habituality;
     private UsedGunCompetitionDTO competition;

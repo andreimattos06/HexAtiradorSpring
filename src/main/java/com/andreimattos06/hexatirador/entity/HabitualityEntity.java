@@ -34,7 +34,6 @@ public class HabitualityEntity implements Serializable {
     private HabitualityProfileDTO profile;
 
     @Builder.Default
-    @DBRef(lazy = true)
     private List<UsedGunEntity> used_guns = new ArrayList<>();
 
 }

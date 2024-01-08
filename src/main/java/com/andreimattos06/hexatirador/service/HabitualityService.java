@@ -21,22 +21,21 @@ public class HabitualityService {
 
     }
 
+    public List<HabitualityEntity> findByProfileEmail(String email) {
+        Optional<List<HabitualityEntity>> obj = habitualityRepository.findByProfileEmail(email);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(email));
+    }
+
     public HabitualityEntity findById(String id) {
         Optional<HabitualityEntity> obj = habitualityRepository.findById(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-    public List<HabitualityEntity> findAllByProfileEmail(String email){
-        Optional<List<HabitualityEntity>> obj = habitualityRepository.findAllByProfileEmail(email);
-        return obj.orElseThrow(() -> new ResourceNotFoundException(email));
-    }
-
-
     public HabitualityEntity saveHabituality(HabitualityEntity habitualityEntity) {
         return habitualityRepository.save(habitualityEntity);
     }
 
-    public HabitualityEntity updateHabituality(HabitualityEntity habitualityEntity, String id) {
+    public HabitualityEntity updateHabituality(HabitualityEntity habitualityEntity) {
         return habitualityRepository.save(habitualityEntity);
     }
 
